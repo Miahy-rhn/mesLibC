@@ -1,7 +1,11 @@
-/* On va demander une série de saisie x,y pour des points 
-puis afficher leurs coordonnées dans une table, ex :
-     1     2    3    4    5   6
-X : | 012 | 004 | 211 |*/
+/*Exercice n°4
+// On va demander une série de saisie x, y pour des points 
+// Puis afficher leur coordonnées dans une table 
+
+       1     2     3     4     5     6     
+X : | 012 | 004 | 211 | 000 | 102 | 311 |  
+Y : | 118 | 033 | 340 | 020 | 707 | 500 | 
+*/
 
 #include <stdio.h>
 #include "plan2D.h"
