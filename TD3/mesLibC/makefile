@@ -19,3 +19,6 @@ $(LIB_DIR)/util_string.o : $(LIB_DIR)/util_string.c
 init :
 	@echo '=== Création des dossiers src et build ==='
 	mkdir -p $(SRC) $(BUILD)
+
+run :$(BUILD)/mixLetter
+	@$(BUILD)/mixLetter

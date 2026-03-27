@@ -16,13 +16,13 @@ help :
 	@echo "\n"
 
 #Alias pour simplifier l'accès à la cible util_string.o 
-lib_util : $(LIB_DIR)/util_string.o
+lib_util : $(LIB_DIR)/src/util_string.o
 
 
 # compilation de la librairie util_string  Exo 3
-$(LIB_DIR)/util_string.o : $(LIB_DIR)/util_string.c
+$(LIB_DIR)/src/util_string.o : $(LIB_DIR)/util_string.c
 	@echo "### compilation.o de util_string"
-	gcc -c -Wall $(LIB_DIR)/util_string.c -o $(LIB_DIR)/util_string.o
+	gcc -c -Wall $(LIB_DIR)/util_string.c -o $(LIB_DIR)/src/util_string.o
 
 # execution d'une variable muette @gcc -c -Wall util_string.c
 
@@ -35,9 +35,9 @@ $(BUILD)/mixLetter.o : $(SRC)/mixLetter.c
 
 # Exo6 : Génération de l'exécutable mixLetter
 
-$(BUILD)/mixLetter : $(BUILD)/mixLetter.o $(LIB_DIR)/util_string.o
+$(BUILD)/mixLetter : $(BUILD)/mixLetter.o $(LIB_DIR)/src/util_string.o
 	@echo "=== compilation finale mixLetter"
-	gcc -Wall $(BUILD)/mixLetter.o $(LIB_DIR)/util_string.o -o $(BUILD)/mixLetter
+	gcc -Wall $(BUILD)/mixLetter.o $(LIB_DIR)/src/util_string.o -o $(BUILD)/mixLetter
 
 
 #Exercice 7 : la règle par défaut est la première du fichier makefile
