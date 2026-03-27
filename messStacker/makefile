@@ -4,7 +4,7 @@ BUILD = ./build
 TEST = ./test
 
 CC = gcc
-CFLAGS = -Wall -Wextra -g -I$(SRC)
+CFLAGS = -Wall -g -I$(SRC)
 
 # Cible par défaut
 all: $(BUILD)/test_version
