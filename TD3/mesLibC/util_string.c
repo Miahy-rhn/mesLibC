@@ -1,7 +1,7 @@
 #include "util_string.h"
 #include <stdbool.h>
 #include <stdio.h>
-
+// Raharijaona Miahy Herimanampanoharana
 // ==============================================================================================================
 int length(char* texte){
     int pos = 0;
