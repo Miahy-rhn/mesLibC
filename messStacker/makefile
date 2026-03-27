@@ -1,25 +1,36 @@
-defaut : $(BUILD)/messStacker
+# Variables
 SRC = ./src
-BUILD = build
-LIB = libmessStacker.a
-TEST_DIR = ./test
-MESLIB = ./mesLib
+BUILD = ./build
+TEST = ./test
 
 CC = gcc
-CFLAGS = -I$(SRC) -I$(MESLIB) -Wall -Wextra -g
-AR = ar
-ARFLAGS = rcs
+CFLAGS = -Wall -Wextra -g -I$(SRC)
 
-all: $(BUILD)/$(LIB)
+# Cible par défaut
+all: $(BUILD)/test_version
 
-$(BUILD)/$(LIB): $(SRC)/messStacker.o
-	$(AR) $(ARFLAGS) $@ $^
+# Création des dossiers si nécessaire
+$(BUILD):
+	@mkdir -p $(BUILD)
 
-$(SRC)/messStacker.o: $(SRC)/messStacker.c $(SRC)/messStacker.h $(MESLIB)/mess_stacker_version.h
+# Compilation de messStacker.o
+$(BUILD)/messStacker.o: $(SRC)/messStacker.c $(SRC)/messStacker.h | $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test: $(BUILD)/$(LIB) $(TEST_DIR)/test_version.c
-	$(CC) $(CFLAGS) -o $(BUILD)/test_version $(TEST_DIR)/test_version.c -L$(BUILD) -l:libmessStacker.a
+# Compilation de test_version.o
+$(BUILD)/test_version.o: $(TEST)/test_version.c | $(BUILD)
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Édition de lien finale
+$(BUILD)/test_version: $(BUILD)/test_version.o $(BUILD)/messStacker.o
+	$(CC) $(CFLAGS) $^ -o $@
+
+# Cible de nettoyage
 clean:
-	rm -f $(SRC)/*.o $(BUILD)/*.a $(BUILD)/test_version
+	rm -f $(BUILD)/*.o $(BUILD)/test_version
+
+.PHONY: all clean
+
+
+run :$(BUILD)/test_version
+	@$(BUILD)/test_version
