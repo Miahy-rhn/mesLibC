@@ -13,6 +13,10 @@ typedef struct st_rectangle {
     int hauteur;
 } Rectangle;
 
-
+//Exo 5 : test 
+typedef struct st_S{
+    int n; 
+    struct st_S * champ2; // <-solution : pointeur vers struct S (sinon "cycle sans fin")
+} S; 
 
 #endif

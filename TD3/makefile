@@ -1,33 +1,57 @@
-LIB_DIR = ../lib
-BUILD = 
+# 1. DÉFINITION DES VARIABLES (Toujours en premier)
+LIB_DIR =./mesLibC
+SRC = ./src
+BUILD = build
 
-defaut: mixLetter
+# 2. RÈGLE PAR DÉFAUT (Elle utilise maintenant des variables connues)
+defaut : $(BUILD)/mixLetter
 
+# 3. LES AUTRES CIBLES
 help : 
-	@echo "Cible disponible :"
-	@echo "   - mixLetter : génère le programme final (défaut)"
-	@echo "   - lib : compile la librairie util_string"
-	@echo "   - clean : nettoyage des .o"
-	@echo "   - help : affichage de l'aide"
+	@echo "\n\t:=:=: Cible disponible :=:=: \n"
+	@echo "- mixLetter : génère le programme final (défaut)"
+	@echo "- lib_util : compile la librairie util_string"
+	@echo "- clean : nettoyage des .o"
+	@echo "- help : affichage de l'aide"
+	@echo "\n"
 
-lib : util_string.o
+#Alias pour simplifier l'accès à la cible util_string.o 
+lib_util : $(LIB_DIR)/util_string.o
 
-# Compilation de la librairie util_string
-util_string.o : util_string.c 
-	@echo "=== Compilation .o de util_string"
-	@gcc -c -Wall util_string.c
+
+# compilation de la librairie util_string  Exo 3
+$(LIB_DIR)/util_string.o : $(LIB_DIR)/util_string.c
+	@echo "### compilation.o de util_string"
+	gcc -c -Wall $(LIB_DIR)/util_string.c -o $(LIB_DIR)/util_string.o
+
+# execution d'une variable muette @gcc -c -Wall util_string.c
+
+# Exo5 : Compilation intermédiaire du mixLetter
 
 $(BUILD)/mixLetter.o : $(SRC)/mixLetter.c
-	@echo "=== Compilation .o de mixLetter"
-	@gcc -I $(LIB_DIR) -c -Wall $(SRC)/mixLetter.c -o $(BUILD)/util_string.o
+	@echo "### compilation .o de mixLetter"
+	gcc -I $(LIB_DIR) -c -Wall $(SRC)/mixLetter.c -o $(BUILD)/mixLetter.o
+#gcc -c -Wall mixLetter.c 
+
+# Exo6 : Génération de l'exécutable mixLetter
 
 $(BUILD)/mixLetter : $(BUILD)/mixLetter.o $(LIB_DIR)/util_string.o
-	@echo "=== Compilation finale mixLetter"
-	@gcc -Wall $(BUILD)/mixLetter.o $(LIB_DIR)/util_string.o -o $(BUILD)/mixLetter
+	@echo "=== compilation finale mixLetter"
+	gcc -Wall $(BUILD)/mixLetter.o $(LIB_DIR)/util_string.o -o $(BUILD)/mixLetter
 
-clean :
-	@echo "... suppression de tous les .o"
-	rm -r *.odefaut: mixLetter
 
-run :
+#Exercice 7 : la règle par défaut est la première du fichier makefile
+
+# Exo 9 : Nettoyage du projet 
+clean : 
+	@echo "=== suppression de tous les .o ==="
+	rm -r *.o
+
+# Règle demandée à l'exercice 14
+init :
+	@echo '=== Création des dossiers src et build ==='
+	mkdir -p $(SRC) $(BUILD)
+
+# Exo 15 : 
+run :$(BUILD)/mixLetter
 	@$(BUILD)/mixLetter
