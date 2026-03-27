@@ -1,15 +1,16 @@
 # 1. DÉFINITION DES VARIABLES (Toujours en premier)
-LIB_DIR =./mesLibC
+LIB_DIR =./messStacker/src
 SRC = ./src
 BUILD = build
+TEST = test
 
 # 2. RÈGLE PAR DÉFAUT (Elle utilise maintenant des variables connues)
-defaut : $(BUILD)/mixLetter
+defaut : $(BUILD)/test_version
 
 # 3. LES AUTRES CIBLES
 help : 
-	@echo "\n\t:=:=: Cible disponible :=:=: \n"
-	@echo "- mixLetter : génère le programme final (défaut)"
+	@echo "=== Cible disponible === \n"
+	@echo "- test_version : génère le programme final (défaut)"
 	@echo "- lib_util : compile la librairie util_string"
 	@echo "- clean : nettoyage des .o"
 	@echo "- help : affichage de l'aide"
@@ -26,18 +27,18 @@ $(LIB_DIR)/src/util_string.o : $(LIB_DIR)/util_string.c
 
 # execution d'une variable muette @gcc -c -Wall util_string.c
 
-# Exo5 : Compilation intermédiaire du mixLetter
+# Exo5 : Compilation intermédiaire du test_version
 
-$(BUILD)/mixLetter.o : $(SRC)/mixLetter.c
-	@echo "### compilation .o de mixLetter"
-	gcc -I $(LIB_DIR) -c -Wall $(SRC)/mixLetter.c -o $(BUILD)/mixLetter.o
-#gcc -c -Wall mixLetter.c 
+$(BUILD)/test_version.o : $(TEST)/test_version.c
+	@echo "### compilation .o de test_version"
+	gcc -I $(LIB_DIR) -c -Wall $(TEST)/test_version.c -o $(BUILD)/test_version.o
+#gcc -c -Wall test_version.c 
 
-# Exo6 : Génération de l'exécutable mixLetter
+# Exo6 : Génération de l'exécutable test_version
 
-$(BUILD)/mixLetter : $(BUILD)/mixLetter.o $(LIB_DIR)/src/util_string.o
-	@echo "=== compilation finale mixLetter"
-	gcc -Wall $(BUILD)/mixLetter.o $(LIB_DIR)/src/util_string.o -o $(BUILD)/mixLetter
+$(BUILD)/test_version : $(BUILD)/test_version.o $(LIB_DIR)/src/util_string.o
+	@echo "=== compilation finale test_version"
+	gcc -Wall $(BUILD)/test_version.o $(LIB_DIR)/src/util_string.o -o $(BUILD)/test_version
 
 
 #Exercice 7 : la règle par défaut est la première du fichier makefile
@@ -50,8 +51,8 @@ clean :
 # Règle demandée à l'exercice 14
 init :
 	@echo '=== Création des dossiers src et build ==='
-	mkdir -p $(SRC) $(BUILD)
+	mkdir -p $(TEST) $(BUILD)
 
 # Exo 15 : 
-run :$(BUILD)/mixLetter
-	@$(BUILD)/mixLetter
+run :$(BUILD)/test_version
+	@$(BUILD)/test_version
